@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block contents %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<title>All tasks</title>
+
+
+<div class="new_card">
+    {% for all_data in show_task_model %}
+    
+<!-- bootstarp card here-------- -->
+
+<div class="bg-info card my_card" style="width: 18rem;" >
+    <div class="card-body ">
+      <h5 class="card-title">Task id :{{all_data.id}}</h5>
+      <h5 class="card-title">Title : {{all_data.task_title}}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{all_data.task_description}}</h6>
+
+      <!-- catagory part starts here ----------------  -->
+      Catagory :
+      {% for cat in all_data.task_catagory.all %}
+      
+        <div>
+            {{cat.catagory_name}}
+        </div>
+     
+      {% endfor %}
+      <!-- catagory part ends here ------------- -->
+
+      <!-- is completed control parts starts here ------------------ -->
+      <div class="is_completed_control">
+        {% if all_data.is_completed == False %}
+
+        <a href="{% url 'edit_task' all_data.id %}" class="btn btn-primary card-link">Edit</a>
+        <a href="{% url 'delete_task'  all_data.id %}" class="btn btn-danger card-link">Delete</a>
+
+        {% else %}
+        <p class="completed_button btn btn-warning">Completed</p>
+
+
+
+        {% endif %}
+
+        
+        </div>
+
+       <!-- is completed control part ends here  -->
+
+      
+      
+    </div>
+  </div>
+
+<!-- bootstarp card ends here ------------- -->
+
+{% endfor %}
+
+</div>
+
+    
+{% endblock contents %}
